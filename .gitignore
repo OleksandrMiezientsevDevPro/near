@@ -1,4 +1,4 @@
-research/node_modules/**
-research/neardev/default/**
-research/out/**
-!research/out/.npmignore
+node_modules/**
+neardev/default/**
+out/**
+!out/.npmignore
