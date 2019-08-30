@@ -1,6 +1,6 @@
 # Near Research Repo 
 
-##Greeter example in AssemblyScript
+## Greeter example in AssemblyScript
 
 ## Description
 
