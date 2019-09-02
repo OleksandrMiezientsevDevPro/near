@@ -48,20 +48,24 @@ IOError: [Errno 2] No such file or directory: '/home/alex/.near/genesis.json'
 *To check logs call: docker logs --follow nearcore
 
 > docker logs --follow nearcore
+
 ...
 thread 'main' panicked at 'Failed to deserialize the genesis config.: Error("invalid type: integer `0`, expected a string", line: 16, column: 36)', src/libcore/result.rs:999:5
 ...
--------------
-Looks like genesis.json is absent by some reason
 
+Looks like genesis.json is absent by some reason
+-------------
 2) Running Near new smart contracts project on Windows 10
 > near new_project smartcontracts
+
 > cd smartcontracts
+
 > npm i
+
 > npm run start
 
 ...
-*Starting 'build_bindings'...
-*'build_bindings' errored after 168 ms
-*Error: Import file 'near.ts' not found.
+*Starting 'build_bindings'...\n
+*'build_bindings' errored after 168 ms\n
+*Error: Import file 'near.ts' not found.\n
 ...
