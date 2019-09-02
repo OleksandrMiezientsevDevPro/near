@@ -49,7 +49,7 @@ IOError: [Errno 2] No such file or directory: '/home/alex/.near/genesis.json'
 thread 'main' panicked at 'Failed to deserialize the genesis config.: Error("invalid type: integer `0`, expected a string", line: 16, column: 36)', src/libcore/result.rs:999:5
 ...
 
-####Looks like genesis.json is absent by some reason
+**Looks like genesis.json is absent by some reason**
 
 -------------
 2) Running Near new smart contracts project on Windows 10
@@ -62,7 +62,11 @@ thread 'main' panicked at 'Failed to deserialize the genesis config.: Error("inv
 > npm run start
 
 ...
-*Starting 'build_bindings'...\n
-*'build_bindings' errored after 168 ms\n
-*Error: Import file 'near.ts' not found.\n
+
+*Starting 'build_bindings'...
+
+*'build_bindings' errored after 168 ms
+
+*Error: Import file 'near.ts' not found.
+
 ...
