@@ -1,6 +1,6 @@
 # Near Research Repo 
 
-## Greeter example in AssemblyScript
+## Greeter example in AssemblyScript with it (smart contract) usage by simple React app (in progress)
 
 ## Description
 
@@ -19,7 +19,7 @@ https://opencollective.com/
 Chat
 https://near.chat
 
-### Found Issues
+# Found Issues
 
 1) Starting local Near blockchain node
 
