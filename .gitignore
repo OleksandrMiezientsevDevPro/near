@@ -2,3 +2,5 @@ node_modules/**
 neardev/default/**
 out/**
 !out/.npmignore
+dist/**
+!dist/index.html

@@ -1,21 +1,38 @@
-// Initializing contract
-async function initContract() {
+// Loads nearlib and this contract into window scope.
+import "babel-polyfill";
+
+import React from 'react'
+import ReactDOM from "react-dom";
+
+import AppBuilder from './frontend/index'
+import "./config.js"
+
+async function doInitContract() {
+  // window.near = await nearlib.dev.connect(nearConfig);
+  // nearConfig.nodeUrl = 'https://rpc.nearprotocol.com';
+  // nearConfig.helperUrl = 'https://near-contract-helper.onrender.com';
   console.log("nearConfig", nearConfig);
+  // const walletBaseUrl = 'https://wallet.nearprotocol.com';
+  // window.walletAccount = new nearlib.WalletAccount(nearConfig.contractName, walletBaseUrl);
 
-  // Initializing connection to the NEAR DevNet.
-  window.near = await nearlib.connect(Object.assign({ deps: { keyStore: new nearlib.keyStores.BrowserLocalStorageKeyStore() } }, nearConfig));
-
-  // Initializing Wallet based Account. It can work with NEAR DevNet wallet that
-  // is hosted at https://wallet.nearprotocol.com
+  // New version for nearlib
+  // Initializing connection to the NEAR node.
+  window.near = await nearlib.connect(Object.assign(nearConfig, { deps: { keyStore: new nearlib.keyStores.BrowserLocalStorageKeyStore() } }));
+  // Needed to access wallet login
   window.walletAccount = new nearlib.WalletAccount(window.near);
+
 
   // Getting the Account ID. If unauthorized yet, it's just empty string.
   window.accountId = window.walletAccount.getAccountId();
 
-  // Initializing our contract APIs by contract name and configuration.
+  // Initializing near and near client from the nearlib.
+  // window.near = new nearlib.Near(new nearlib.NearClient(
+  //   window.walletAccount,
+  //   // We need to provide a connection to the blockchain node which we're going to use
+  //   new nearlib.LocalNodeConnection(nearConfig.nodeUrl),
+  // ));
+
   window.contract = await near.loadContract(nearConfig.contractName, {
-    // NOTE: This configuration only needed while NEAR is still in development
-    // View methods are read only. They don't modify the state, but usually return some value.
     viewMethods: ["whoSaidHi"],
     // Change methods can modify the state. But you don't receive the returned value when called.
     changeMethods: ["sayHi"],
@@ -24,71 +41,8 @@ async function initContract() {
   });
 }
 
-// Using initialized contract
-async function doWork() {
-  // Setting up refresh button
-  document.getElementById('refresh-button').addEventListener('click', updateWhoSaidHi);
-
-  // Based on whether you've authorized, checking which flow we should go.
-  if (!window.walletAccount.isSignedIn()) {
-    signedOutFlow();
-  } else {
-    signedInFlow();
-  }
-}
-
-// Function that initializes the signIn button using WalletAccount
-function signedOutFlow() {
-  // Displaying the signed out flow container.
-  document.getElementById('signed-out-flow').classList.remove('d-none');
-  // Adding an event to a sing-in button.
-  document.getElementById('sign-in-button').addEventListener('click', () => {
-    window.walletAccount.requestSignIn(
-      // The contract name that would be authorized to be called by the user's account.
-      window.nearConfig.contractName,
-      // This is the app name. It can be anything.
-      'Who was the last person to say "Hi!"?',
-      // We can also provide URLs to redirect on success and failure.
-      // The current URL is used by default.
-    );
-  });
-}
-
-// Main function for the signed-in flow (already authorized by the wallet).
-function signedInFlow() {
-  // Displaying the signed in flow container.
-  document.getElementById('signed-in-flow').classList.remove('d-none');
-
-  // Displaying current account name.
-  document.getElementById('account-id').innerText = window.accountId;
-
-  // Adding an event to a say-hi button.
-  document.getElementById('say-hi').addEventListener('click', () => {
-    // We call say Hi and then update who said Hi last.
-    window.contract.sayHi().then(updateWhoSaidHi);
-  });
-
-  // Adding an event to a sing-out button.
-  document.getElementById('sign-out-button').addEventListener('click', () => {
-    walletAccount.signOut();
-    // Forcing redirect.
-    window.location.replace(window.location.origin + window.location.pathname);
-  });
-}
-
-// Function to update who said hi
-function updateWhoSaidHi() {
-  // JavaScript tip:
-  // This is another example of how to use promises. Since this function is not async,
-  // we can't await for `contract.whoSaidHi()`, instead we attaching a callback function
-  // usin `.then()`.
-  contract.whoSaidHi().then((who) => {
-    // If the result doesn't have a value we fallback to the text
-    document.getElementById('who').innerText = who || "Nobody (but you can be the first)";
-  });
-}
-
-// Loads nearlib and this contract into window scope.
-window.nearInitPromise = initContract()
-  .then(doWork)
-  .catch(console.error);
+window.nearInitPromise = doInitContract().then(() => {
+  ReactDOM.render(<AppBuilder contract={contract} wallet={walletAccount}/>,
+    document.getElementById('root')
+  );
+}).catch(console.error)
