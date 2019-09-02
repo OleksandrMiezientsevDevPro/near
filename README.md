@@ -27,10 +27,6 @@ https://near.chat
 
 > ./scripts/start_localnet.py 
 
-**
- Running NEAR validator node for Local TestNet    
-**
-
 Traceback (most recent call last):
   File "./scripts/start_localnet.py", line 24, in <module>
     setup_and_run(args.local, not args.debug, args.image, args.home, ['--chain-id='], '', args.verbose)
@@ -53,7 +49,8 @@ IOError: [Errno 2] No such file or directory: '/home/alex/.near/genesis.json'
 thread 'main' panicked at 'Failed to deserialize the genesis config.: Error("invalid type: integer `0`, expected a string", line: 16, column: 36)', src/libcore/result.rs:999:5
 ...
 
-Looks like genesis.json is absent by some reason
+####Looks like genesis.json is absent by some reason
+
 -------------
 2) Running Near new smart contracts project on Windows 10
 > near new_project smartcontracts
