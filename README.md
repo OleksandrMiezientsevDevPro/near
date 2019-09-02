@@ -21,7 +21,7 @@ https://near.chat
 
 # Found Issues
 
-1) Starting local Near blockchain node
+###Starting local Near blockchain node
 
 ---Ubuntu 16.04---
 
@@ -52,7 +52,7 @@ thread 'main' panicked at 'Failed to deserialize the genesis config.: Error("inv
 **Looks like genesis.json is absent by some reason**
 
 -------------
-2) Running Near new smart contracts project on Windows 10
+###Running Near new smart contracts project on Windows 10
 > near new_project smartcontracts
 
 > cd smartcontracts
