@@ -4,6 +4,7 @@ import { context, storage, near } from "./near";
 
 // It's good to use common constant, but not required.
 const LAST_SENDER_KEY = "last_sender";
+const LAST_SENDER_PHRASEKEY = "last_sender_phrase"
 
 // This is our change method. It modifies the state of the contract by
 // storing the account_id of the sender under the key "last_sender" on the blockchain
@@ -27,4 +28,18 @@ export function sayHi(): void {
 export function whoSaidHi(): string {
   // getString returns a string value for a given string key.
   return storage.getString(LAST_SENDER_KEY);
+}
+
+export function saySomePhrase(phrase: string): void {
+  let sender = context.sender;
+  near.log(sender + ' says "' + phrase + '!!!"');
+  storage.setString(_getSenderPhraseKey(sender), phrase);
+}
+
+export function getLastPhrase(accountId: string): string {
+  return storage.getString(_getSenderPhraseKey(accountId));
+}
+
+export function _getSenderPhraseKey(accountId: string): string {
+  return LAST_SENDER_PHRASEKEY + accountId;
 }

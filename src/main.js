@@ -33,9 +33,9 @@ async function doInitContract() {
   // ));
 
   window.contract = await near.loadContract(nearConfig.contractName, {
-    viewMethods: ["whoSaidHi"],
+    viewMethods: ["whoSaidHi", "getLastPhrase"],
     // Change methods can modify the state. But you don't receive the returned value when called.
-    changeMethods: ["sayHi"],
+    changeMethods: ["sayHi", "saySomePhrase"],
     // Sender is the account ID to initialize transactions.
     sender: window.accountId,
   });
